@@ -8,10 +8,11 @@
         Title="MainWindow" Height="515" Width="902">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="442*"/>
-            <ColumnDefinition Width="74*"/>
-            <ColumnDefinition Width="61*"/>
-            <ColumnDefinition Width="242*"/>
+            <ColumnDefinition Width="263*"/>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="17*"/>
+            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <GroupBox Header="Manage Gladiators" Margin="0,23,116,0" RenderTransformOrigin="0.5,0.5">
             <GroupBox.RenderTransform>
@@ -53,7 +54,7 @@
                 <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="-423,100,0,0" VerticalAlignment="Top" Width="96"/>
             </Grid>
         </GroupBox>
-        <ComboBox Grid.Column="3" HorizontalAlignment="Left" Margin="93,-74,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <ComboBox Grid.Column="4" HorizontalAlignment="Left" Margin="93,-74,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
         <DockPanel LastChildFill="False" Grid.ColumnSpan="4" Margin="0,0,0,460">
             <Menu DockPanel.Dock="Top" Height="20">
                 <MenuItem Header="_File" Width="67">

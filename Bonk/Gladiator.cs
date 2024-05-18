@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bonk
 {
-    class Gladiator : IGladiator
+    public class Gladiator : IGladiator
     {
         //Private string variable for the gladiators name.
         private string name;
@@ -24,32 +24,82 @@ namespace Bonk
         private int maxHealthPoints;
         //Private int for the gladiators defence score
         private int defenseScore;
+       /// <summary>
+       /// Public property for variable name.
+       /// Read access.
+       /// </summary>
         public string Name 
         { 
             get { return name; } 
         }
+        /// <summary>
+        /// Property for variable strength.
+        /// Read access.
+        /// </summary>
         public int Strength 
         { 
             get { return strength; }
         }
+        /// <summary>
+        /// Property for variable agility.
+        /// Read access.
+        /// </summary>
         public int Agility 
         { 
             get { return agility; } 
         }
+        /// <summary>
+        /// Property for variable intelligence.
+        /// Read access.
+        /// </summary>
         public int Intelligence 
         { 
             get {  return intelligence; } 
         }
+        /// <summary>
+        /// Property for variable constitution.
+        /// Read access.
+        /// </summary>
         public int Constitution 
         { 
             get {  return constitution; } 
+        }
+        /// <summary>
+        /// Property for variable currentHealthPoints.
+        /// Both read and write access.
+        /// </summary>
+        public int CurrentHealthPoints
+        {
+            get { return currentHealthPoints; }
+            set { currentHealthPoints = value; }
+        }
+        /// <summary>
+        /// Property for variable maxHealthPoints.
+        /// Read access. 
+        /// </summary>
+        public int MaxHealthPoints
+        {
+            get { return maxHealthPoints;  } 
         }
         public delegate void EventHandler<ArenaEventArgs>(object sender, ArenaEventArgs e);
         public event EventHandler<ArenaEventArgs> Roll;
         public event EventHandler<ArenaEventArgs> Attack;
         public event EventHandler<ArenaEventArgs> Faint;
 
-        private int Dice(int sides)
+        internal void RaiseRollEvent(ArenaEventArgs e)
+        {
+            Roll(Name, e);
+        }
+        internal void RaiseAttackEvent(ArenaEventArgs e)
+        {
+            Attack(Name, e);
+        }
+        public void OnFaint()
+        {
+            ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "faints", 0);
+        }
+
+        public int RollDice(int sides)
         {
             int result;
             Random random = new Random();

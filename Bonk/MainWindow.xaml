@@ -37,7 +37,7 @@
         </GroupBox>
         <GroupBox x:Name="grpArena" Header="Arena" Margin="390,23,0,0" Grid.ColumnSpan="4">
             <Grid Margin="46,0,0,0" Height="411">
-                <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="32,10,31,181">
+                <ListView x:Name="lstArena" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="32,10,31,181">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>

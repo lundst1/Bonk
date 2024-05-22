@@ -15,7 +15,7 @@ namespace Bonk.Gladiators
             ArenaEventArgs arenaEventargs = new ArenaEventArgs(Name, "casts a spell", hitRoll);
             base.RaiseRollEvent(arenaEventargs);
         }
-        public void OnAttack()
+        public override void OnAttack()
         {
             int attackRoll = base.RollDice(20);
             attackRoll = attackRoll + Intelligence;

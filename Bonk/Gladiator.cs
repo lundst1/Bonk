@@ -81,6 +81,10 @@ namespace Bonk
         {
             get { return maxHealthPoints;  } 
         }
+        public int DefenseScore
+        {
+            get { return defenseScore; }
+        }
         public delegate void EventHandler<ArenaEventArgs>(object sender, ArenaEventArgs e);
         public event EventHandler<ArenaEventArgs> Roll;
         public event EventHandler<ArenaEventArgs> Attack;
@@ -98,6 +102,8 @@ namespace Bonk
         {
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "faints", 0);
         }
+
+        public virtual void OnAttack() { }
 
         public int RollDice(int sides)
         {

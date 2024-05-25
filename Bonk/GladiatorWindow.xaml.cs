@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,59 +37,131 @@ namespace Bonk
         {
             get { return gladiator; }
         }
-
+        /// <summary>
+        /// Constructor for GladiatorWindow.
+        /// </summary>
         public GladiatorWindow()
         {
             InitializeComponent();
             InitializeGUI();
         }
+        /// <summary>
+        /// Method to initialize GUI elements.
+        /// </summary>
         private void InitializeGUI()
         {
             lblRemainingAbilityScoreValue.Content = remainingScore.ToString();
         }
+        /// <summary>
+        /// Method that updates how many remaining scorepoints exist.
+        /// Calculates new remaining score and checks that it is not below 0 before setting it.
+        /// </summary>
+        /// <param name="value">The value that changes remaining score points.</param>
+        /// <returns>Returns true if remaining scorepoints is 0 or greater.</returns>
         private bool UpdateRemainingScores(int value)
         {
             bool validRemainingScores = true;
 
-            remainingScore -= value;
+            int newScore = remainingScore - value;
             
-            if (remainingScore < 0)
+            if (newScore < 0)
             {
                 validRemainingScores = false;
             }
             else
             {
+                remainingScore = newScore;
                 lblRemainingAbilityScoreValue.Content = remainingScore.ToString();
             }
             return (validRemainingScores);
         }
+        /// <summary>
+        /// Method that calculates difference between to nullable integers.
+        /// </summary>
+        /// <param name="value1">The first nullable integer.</param>
+        /// <param name="value2">The second nullable integer.</param>
+        /// <returns>Returns the difference between two nullable integers as a non nullable integer.</returns>
         private int CalculateDifference(int? value1, int? value2)
         {
             return ((value1 ?? default(int)) - (value2 ?? default(int)));
         }
+        /// <summary>
+        /// Method that handles the event that the control upDownStrength has its value changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void upDownStrength_ValueChanged(object sender, EventArgs e)
         {
             int difference = CalculateDifference(upDownStrength.Value, strengthScore);
-            strengthScore = upDownStrength.Value;
-            UpdateRemainingScores(difference); //TODO check that update is valid
+            bool validRemainingScore = UpdateRemainingScores(difference);
+            
+            if (validRemainingScore)
+            {
+                strengthScore = upDownStrength.Value;
+            }
+            else
+            {
+                upDownStrength.Value = strengthScore;
+            }
+
         }
+        /// <summary>
+        /// Method that handles the event that the control upDownAgility has its value changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void upDownAgility_ValueChanged(object sender, EventArgs e)
         {
             int difference = CalculateDifference(upDownAgility.Value, agilityScore);
-            agilityScore = upDownAgility.Value;
-            UpdateRemainingScores(difference);
+            bool validRemainingScore = UpdateRemainingScores(difference);
+
+            if (validRemainingScore)
+            {
+                agilityScore = upDownAgility.Value;
+            }
+            else
+            {
+                upDownAgility.Value = agilityScore;
+            }
         }
+        /// <summary>
+        /// Method that handles the event that the control upDownIntelligence has its value changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void upDownIntelligence_ValueChanged(object sender, EventArgs e)
         {
             int difference = CalculateDifference(upDownIntelligence.Value, intelligenceScore);
-            intelligenceScore = upDownIntelligence.Value;
-            UpdateRemainingScores(difference);
+            bool validRemainingScore = UpdateRemainingScores(difference);
+
+            if (validRemainingScore)
+            {
+                intelligenceScore = upDownIntelligence.Value;
+            }
+            else
+            {
+                upDownIntelligence.Value = intelligenceScore;
+            }
+
         }
+        /// <summary>
+        /// Method that handles the event that the control upDownConstitution has its value changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void upDownConstitution_ValueChanged(object sender, EventArgs e)
         {
             int difference = CalculateDifference(upDownConstitution.Value, constitutionScore);
-            constitutionScore = upDownConstitution.Value;
-            UpdateRemainingScores(difference);
+            bool validRemainingScore = UpdateRemainingScores(difference);
+
+            if (validRemainingScore)
+            {
+                constitutionScore = upDownConstitution.Value;
+            }
+            else
+            {
+                upDownConstitution.Value = constitutionScore;
+            }
         }
         private bool validateAbilityScore(int? nullableScore, out int score)
         {
@@ -106,23 +179,32 @@ namespace Bonk
         } 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            bool valid = true;
+            bool scoresValid = true;
+
             string name = txtName.Text;
 
-            bool scoresValid = true;
             scoresValid = validateAbilityScore(strengthScore, out int strength);
             scoresValid = validateAbilityScore(agilityScore, out int agility);
             scoresValid = validateAbilityScore(intelligenceScore, out int intelligence);
             scoresValid = validateAbilityScore(constitutionScore, out int constitution);
 
-            if (scoresValid)
+            
+            if (name != String.Empty)
+            {
+                MessageBox.Show("Please enter a name for the gladiator.");
+                valid = false;
+            }
+            if (!scoresValid)
+            {
+                MessageBox.Show("Please fill in a value for all scores.");
+                valid = false;
+            }
+            if (valid)
             {
                 this.DialogResult = true;
                 this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Please fill in a value for all scores");
-            }
+            } 
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

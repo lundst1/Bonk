@@ -24,7 +24,7 @@
                 </TransformGroup>
             </GroupBox.RenderTransform>
             <Grid HorizontalAlignment="Left" Width="223" Margin="125,0,0,0">
-                <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,26">
+                <ListView x:Name="lstGladiators" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,26">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn/>

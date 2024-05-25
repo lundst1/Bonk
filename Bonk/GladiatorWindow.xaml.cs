@@ -13,11 +13,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Bonk.Enums;
+using Bonk.Gladiators;
 
 namespace Bonk
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for GladiatorWindow.xaml
     /// </summary>
     public partial class GladiatorWindow : Window
     {
@@ -45,12 +47,42 @@ namespace Bonk
             InitializeComponent();
             InitializeGUI();
         }
+        public GladiatorWindow(Gladiator gladiator) : this()
+        {
+            txtName.Text = gladiator.Name;
+
+            int strength = gladiator.Strength;
+            int agility = gladiator.Agility;
+            int intelligence = gladiator.Intelligence;
+            int constitution = gladiator.Constitution;
+
+            upDownStrength.Value = strength;
+            upDownAgility.Value = agility;
+            upDownIntelligence.Value = intelligence;
+            upDownConstitution.Value = constitution;
+
+            remainingScore = remainingScore - strength - agility - intelligence - constitution;
+
+            if (gladiator.GetType() == typeof(Mage))
+            {
+                cBoxClass.SelectedItem = Classes.Mage;
+            }
+            if (gladiator.GetType() == typeof(Rouge))
+            {
+                cBoxClass.SelectedItem = Classes.Rouge;
+            }
+            if (gladiator.GetType() == typeof(Warrior))
+            {
+                cBoxClass.SelectedItem = Classes.Warrior;
+            }
+        } 
         /// <summary>
         /// Method to initialize GUI elements.
         /// </summary>
         private void InitializeGUI()
         {
             lblRemainingAbilityScoreValue.Content = remainingScore.ToString();
+            cBoxClass.ItemsSource = Enum.GetValues(typeof(Classes)).Cast<Classes>();
         }
         /// <summary>
         /// Method that updates how many remaining scorepoints exist.
@@ -163,6 +195,13 @@ namespace Bonk
                 upDownConstitution.Value = constitutionScore;
             }
         }
+        /// <summary>
+        /// Method to validate ability scores.
+        /// Checks that the score, which is a nullable int is not null.
+        /// </summary>
+        /// <param name="nullableScore"></param>
+        /// <param name="score"></param>
+        /// <returns></returns>
         private bool validateAbilityScore(int? nullableScore, out int score)
         {
             bool valid = false;
@@ -189,7 +228,8 @@ namespace Bonk
             scoresValid = validateAbilityScore(intelligenceScore, out int intelligence);
             scoresValid = validateAbilityScore(constitutionScore, out int constitution);
 
-            
+            bool validClass = Enum.TryParse(cBoxClass.SelectedItem.ToString(), out Classes gladiatorClass);
+
             if (name != String.Empty)
             {
                 MessageBox.Show("Please enter a name for the gladiator.");
@@ -200,8 +240,25 @@ namespace Bonk
                 MessageBox.Show("Please fill in a value for all scores.");
                 valid = false;
             }
+            if (!validClass)
+            {
+                MessageBox.Show("Semething went wrong. Please reselect class");
+            }
             if (valid)
             {
+                if (gladiatorClass == Classes.Mage)
+                {
+                    gladiator = new Mage(name, strength, agility, intelligence, constitution);
+                }
+                if (gladiatorClass == Classes.Rouge)
+                {
+                    gladiator = new Rouge(name, strength, agility, intelligence, constitution);
+                }
+                if (gladiatorClass == Classes.Warrior)
+                {
+                    gladiator = new Warrior(name, strength, agility, intelligence, constitution);
+                }
+
                 this.DialogResult = true;
                 this.Close();
             } 
@@ -209,7 +266,7 @@ namespace Bonk
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
     }
 }

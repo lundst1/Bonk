@@ -16,7 +16,11 @@ namespace Bonk
     /// </summary>
     public partial class MainWindow : Window
     {
-        Arena arena;
+        //Private variable for instance of class Arena.
+        private Arena arena;
+        /// <summary>
+        /// Constructor for MainWindow.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -37,16 +41,29 @@ namespace Bonk
 
             if (result == true)
             {
-
-
-               //arena.AddGladiator(gladiator);
+                gladiator = gladiatorWindow.Gladiator; 
+                arena.AddGladiator(gladiator);
             }
 
         }
-
         private void btnEditGladiator_Click(object sender, RoutedEventArgs e)
         {
+            int index = lstGladiators.SelectedIndex;
+            if (index != -1)
+            {
+                Gladiator gladiator = arena.GetGladiator(index);
 
+                GladiatorWindow gladiatorWindow = new GladiatorWindow();
+                gladiatorWindow.ShowDialog();
+
+                bool? result = gladiatorWindow.DialogResult;
+
+                if (result == true)
+                {
+                    gladiator = gladiatorWindow.Gladiator;
+                    arena.AddGladiator(gladiator);
+                }
+            }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

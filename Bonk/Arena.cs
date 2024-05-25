@@ -11,9 +11,13 @@ namespace Bonk
 {
     public class Arena
     { 
+        //Private variable for instance of ListManager<Gladiator>.
         private ListManager<Gladiator> gladiatorManager = new ListManager<Gladiator>();
+        //Private variable for the currently active gladiator in the arena fight.
         private Gladiator activeGladiator;
+        //Private variable for the currently non active gladiator in the arena fight.
         private Gladiator nonActiveGladiator;
+        //Private variable for reference to the listview for the arena fights.
         private ListView lstArena;
         public Arena(ListView lstArena) 
         { 
@@ -35,7 +39,12 @@ namespace Bonk
             bool success = gladiatorManager.ChangeAt(gladiator, index);
 
             return success;
-        } 
+        }
+        public Gladiator GetGladiator(int index)
+        {
+            Gladiator gladiator = gladiatorManager.GetAt(index);
+            return gladiator;
+        }
 
         public void OnRollToHit(object sender, ArenaEventArgs e)
         {

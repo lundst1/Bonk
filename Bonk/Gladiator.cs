@@ -31,6 +31,7 @@ namespace Bonk
         public string Name 
         { 
             get { return name; } 
+            set { name = value; }
         }
         /// <summary>
         /// Property for variable strength.
@@ -39,6 +40,7 @@ namespace Bonk
         public int Strength 
         { 
             get { return strength; }
+            set { strength = value; }
         }
         /// <summary>
         /// Property for variable agility.
@@ -47,6 +49,7 @@ namespace Bonk
         public int Agility 
         { 
             get { return agility; } 
+            set { agility = value; }
         }
         /// <summary>
         /// Property for variable intelligence.
@@ -55,6 +58,7 @@ namespace Bonk
         public int Intelligence 
         { 
             get {  return intelligence; } 
+            set { intelligence = value; }
         }
         /// <summary>
         /// Property for variable constitution.
@@ -62,7 +66,8 @@ namespace Bonk
         /// </summary>
         public int Constitution 
         { 
-            get {  return constitution; } 
+            get {  return constitution; }
+            set { constitution = value; }
         }
         /// <summary>
         /// Property for variable currentHealthPoints.

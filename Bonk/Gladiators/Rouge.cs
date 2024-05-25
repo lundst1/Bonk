@@ -8,6 +8,13 @@ namespace Bonk.Gladiators
 {
     public class Rouge : Gladiator
     {
+        public Rouge(string name, int strength, int agility, int intelligence, int constitution)
+        {
+            base.Name = name;
+            base.Strength = strength;
+            base.Agility = agility;
+            base.Intelligence = intelligence;
+        }
         public void OnRoll()
         {
             int hitRoll = base.RollDice(20);

@@ -49,9 +49,9 @@
                 <Label x:Name="lblGladiator1" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="32,348,0,0" VerticalAlignment="Top" Width="161" BorderThickness="1" BorderBrush="#FF0A0909" Height="26" Background="White" Foreground="Black"/>
                 <Label x:Name="lblGladiator2" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="222,348,0,0" VerticalAlignment="Top" Width="160" BorderThickness="1" Background="#00000000" BorderBrush="#FF020202" Height="26"/>
                 <Button x:Name="btnStartFight" Content="Start fight" HorizontalAlignment="Center" Margin="0,392,0,0" VerticalAlignment="Top" Width="200"/>
-                <Button x:Name="btnCreateGladiator" Content="Create" HorizontalAlignment="Left" Margin="-423,32,0,0" VerticalAlignment="Top" Width="96"/>
-                <Button x:Name="btnEditGladiator" Content="Edit" HorizontalAlignment="Left" Margin="-423,68,0,0" VerticalAlignment="Top" Width="96"/>
-                <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="-423,100,0,0" VerticalAlignment="Top" Width="96"/>
+                <Button x:Name="btnCreateGladiator" Content="Create" HorizontalAlignment="Left" Margin="-423,32,0,0" VerticalAlignment="Top" Width="96" Click="btnCreateGladiator_Click"/>
+                <Button x:Name="btnEditGladiator" Content="Edit" HorizontalAlignment="Left" Margin="-423,68,0,0" VerticalAlignment="Top" Width="96" Click="btnEditGladiator_Click"/>
+                <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="-423,100,0,0" VerticalAlignment="Top" Width="96" Click="btnDelete_Click"/>
             </Grid>
         </GroupBox>
         <ComboBox Grid.Column="4" HorizontalAlignment="Left" Margin="93,-74,0,0" VerticalAlignment="Top" Width="120" Height="22"/>

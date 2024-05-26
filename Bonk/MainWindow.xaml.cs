@@ -28,7 +28,17 @@ namespace Bonk
         }
         public void UpdateGUI()
         {
+            lstGladiators.Items.Clear();
+            List<Gladiator> gladiatorList = arena.GetGladiatorList();
 
+            for (int i = 0; i < gladiatorList.Count; i++)
+            {
+                Gladiator gladiator = gladiatorList[i];
+                string name = gladiator.Name;
+                string gladClass = gladiator.GetType().Name;
+
+                lstGladiators.Items.Add(new GladiatorListViewItem { Name = name, Class = gladClass, Index = i });
+            }
         }
         private void btnCreateGladiator_Click(object sender, RoutedEventArgs e)
         {
@@ -43,15 +53,17 @@ namespace Bonk
             {
                 gladiator = gladiatorWindow.Gladiator; 
                 arena.AddGladiator(gladiator);
+                UpdateGUI();
             }
 
         }
         private void btnEditGladiator_Click(object sender, RoutedEventArgs e)
         {
-            int index = lstGladiators.SelectedIndex;
-            if (index != -1)
+            if (lstGladiators.SelectedIndex != -1)
             {
-                Gladiator gladiator = arena.GetGladiator(index);
+                GladiatorListViewItem item = (GladiatorListViewItem)lstGladiators.SelectedItems[0];
+                //int index = item.Index;
+                Gladiator gladiator = arena.GetGladiator(item.Index);
 
                 GladiatorWindow gladiatorWindow = new GladiatorWindow();
                 gladiatorWindow.ShowDialog();

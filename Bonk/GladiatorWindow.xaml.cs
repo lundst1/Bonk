@@ -230,7 +230,7 @@ namespace Bonk
 
             bool validClass = Enum.TryParse(cBoxClass.SelectedItem.ToString(), out Classes gladiatorClass);
 
-            if (name != String.Empty)
+            if (name == String.Empty)
             {
                 MessageBox.Show("Please enter a name for the gladiator.");
                 valid = false;
@@ -266,6 +266,7 @@ namespace Bonk
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
             this.Close();
         }
     }

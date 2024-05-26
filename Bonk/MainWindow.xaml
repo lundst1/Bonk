@@ -14,7 +14,7 @@
             <ColumnDefinition Width="150*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="Manage Gladiators" Margin="0,23,116,0" RenderTransformOrigin="0.5,0.5">
+        <GroupBox Header="Manage Gladiators" Margin="0,23,122,0" RenderTransformOrigin="0.5,0.5">
             <GroupBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -24,10 +24,11 @@
                 </TransformGroup>
             </GroupBox.RenderTransform>
             <Grid HorizontalAlignment="Left" Width="223" Margin="125,0,0,0">
-                <ListView x:Name="lstGladiators" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,26">
+                <ListView x:Name="lstGladiators" Margin="0,0,0,26">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Class" DisplayMemberBinding="{Binding Class}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -35,8 +36,8 @@
 
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="grpArena" Header="Arena" Margin="390,23,0,0" Grid.ColumnSpan="4">
-            <Grid Margin="46,0,0,0" Height="411">
+        <GroupBox x:Name="grpArena" Header="Arena" Margin="421,23,0,0" Grid.ColumnSpan="4">
+            <Grid Margin="32,0,14,0" Height="411">
                 <ListView x:Name="lstArena" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="32,10,31,181">
                     <ListView.View>
                         <GridView>
@@ -49,9 +50,9 @@
                 <Label x:Name="lblGladiator1" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="32,348,0,0" VerticalAlignment="Top" Width="161" BorderThickness="1" BorderBrush="#FF0A0909" Height="26" Background="White" Foreground="Black"/>
                 <Label x:Name="lblGladiator2" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="222,348,0,0" VerticalAlignment="Top" Width="160" BorderThickness="1" Background="#00000000" BorderBrush="#FF020202" Height="26"/>
                 <Button x:Name="btnStartFight" Content="Start fight" HorizontalAlignment="Center" Margin="0,392,0,0" VerticalAlignment="Top" Width="200"/>
-                <Button x:Name="btnCreateGladiator" Content="Create" HorizontalAlignment="Left" Margin="-423,32,0,0" VerticalAlignment="Top" Width="96" Click="btnCreateGladiator_Click"/>
-                <Button x:Name="btnEditGladiator" Content="Edit" HorizontalAlignment="Left" Margin="-423,68,0,0" VerticalAlignment="Top" Width="96" Click="btnEditGladiator_Click"/>
-                <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="-423,100,0,0" VerticalAlignment="Top" Width="96" Click="btnDelete_Click"/>
+                <Button x:Name="btnCreateGladiator" Content="Create" HorizontalAlignment="Left" Margin="-449,32,0,0" VerticalAlignment="Top" Width="96" Click="btnCreateGladiator_Click"/>
+                <Button x:Name="btnEditGladiator" Content="Edit" HorizontalAlignment="Left" Margin="-450,68,0,0" VerticalAlignment="Top" Width="96" Click="btnEditGladiator_Click"/>
+                <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="-450,100,0,0" VerticalAlignment="Top" Width="96" Click="btnDelete_Click"/>
             </Grid>
         </GroupBox>
         <ComboBox Grid.Column="4" HorizontalAlignment="Left" Margin="93,-74,0,0" VerticalAlignment="Top" Width="120" Height="22"/>

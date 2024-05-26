@@ -45,6 +45,11 @@ namespace Bonk
             Gladiator gladiator = gladiatorManager.GetAt(index);
             return gladiator;
         }
+        public List<Gladiator> GetGladiatorList()
+        {
+            List<Gladiator> gladiatorList = gladiatorManager.List;
+            return gladiatorList;
+        }
 
         public void OnRollToHit(object sender, ArenaEventArgs e)
         {

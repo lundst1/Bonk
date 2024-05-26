@@ -45,8 +45,8 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button x:Name="btnSelectGladiator1" Content="Select Gladiator 1" HorizontalAlignment="Left" Margin="32,308,0,0" VerticalAlignment="Top" Width="161"/>
-                <Button x:Name="btnSelectGladiator2" Content="Select Gladiator 2" HorizontalAlignment="Left" Margin="221,308,0,0" VerticalAlignment="Top" Width="161"/>
+                <Button x:Name="btnSelectGladiator1" Content="Select Gladiator 1" HorizontalAlignment="Left" Margin="32,308,0,0" VerticalAlignment="Top" Width="161" Click="btnSelectGladiator1_Click"/>
+                <Button x:Name="btnSelectGladiator2" Content="Select Gladiator 2" HorizontalAlignment="Left" Margin="221,308,0,0" VerticalAlignment="Top" Width="161" Click="btnSelectGladiator2_Click"/>
                 <Label x:Name="lblGladiator1" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="32,348,0,0" VerticalAlignment="Top" Width="161" BorderThickness="1" BorderBrush="#FF0A0909" Height="26" Background="White" Foreground="Black"/>
                 <Label x:Name="lblGladiator2" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="222,348,0,0" VerticalAlignment="Top" Width="160" BorderThickness="1" Background="#00000000" BorderBrush="#FF020202" Height="26"/>
                 <Button x:Name="btnStartFight" Content="Start fight" HorizontalAlignment="Center" Margin="0,392,0,0" VerticalAlignment="Top" Width="200"/>

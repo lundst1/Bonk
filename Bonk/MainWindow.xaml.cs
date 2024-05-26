@@ -18,6 +18,7 @@ namespace Bonk
     {
         //Private variable for instance of class Arena.
         private Arena arena;
+        private Gladiator[] fighters = new Gladiator[2];
         /// <summary>
         /// Constructor for MainWindow.
         /// </summary>
@@ -39,6 +40,17 @@ namespace Bonk
 
                 lstGladiators.Items.Add(new GladiatorListViewItem { Name = name, Class = gladClass, Index = i });
             }
+
+            if (fighters[0] != null)
+            {
+                lblGladiator1.Content = fighters[0].Name;
+            }
+            if (fighters[1] != null)
+            {
+                lblGladiator2.Content = fighters[1].Name;
+            }
+
+
         }
         private void btnCreateGladiator_Click(object sender, RoutedEventArgs e)
         {
@@ -62,10 +74,10 @@ namespace Bonk
             if (lstGladiators.SelectedIndex != -1)
             {
                 GladiatorListViewItem item = (GladiatorListViewItem)lstGladiators.SelectedItems[0];
-                //int index = item.Index;
-                Gladiator gladiator = arena.GetGladiator(item.Index);
+                int index = item.Index;
+                Gladiator gladiator = arena.GetGladiator(index);
 
-                GladiatorWindow gladiatorWindow = new GladiatorWindow();
+                GladiatorWindow gladiatorWindow = new GladiatorWindow(gladiator);
                 gladiatorWindow.ShowDialog();
 
                 bool? result = gladiatorWindow.DialogResult;
@@ -73,14 +85,84 @@ namespace Bonk
                 if (result == true)
                 {
                     gladiator = gladiatorWindow.Gladiator;
-                    arena.AddGladiator(gladiator);
+                    arena.EditGladiator(index, gladiator);
+                    UpdateGUI();
                 }
             }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+            if (lstGladiators.SelectedIndex != -1)
+            {
+                GladiatorListViewItem item = (GladiatorListViewItem)lstGladiators.SelectedItems[0];
+                int index = item.Index;
 
+                arena.DeleteGladiator(index);
+                UpdateGUI();
+            }
+        }
+        private bool SelectGladiator()
+        {
+            bool valid = true;
+
+            if (lstGladiators.SelectedIndex != -1)
+            {
+                GladiatorListViewItem item = (GladiatorListViewItem)lstGladiators.SelectedItems[0];
+                int index = item.Index;
+                Gladiator gladiator = arena.GetGladiator(index);
+
+                if (fighters[0] != null) 
+                { 
+                    if (fighters[0] == gladiator)
+                    {
+                        valid = false;
+                    }
+                    else
+                    {
+                        fighters[1] = gladiator;
+                        UpdateGUI();
+                    }
+                }
+                if (fighters[0] == null)
+                {
+                    fighters[0] = gladiator;
+                    UpdateGUI();
+                }
+
+            }
+            return valid;
+        }
+        /// <summary>
+        /// Method that runs when Select Gladiator 1 is clicked. 
+        /// Calls method SelectGladiator and displays error message if that method returns false.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSelectGladiator1_Click(object sender, RoutedEventArgs e)
+        {
+            bool valid = SelectGladiator();
+
+            if (!valid)
+            {
+                MessageBox.Show("Gladiator 1 cannot be the same as gladiator 2.");
+            }
+
+        }
+        /// <summary>
+        /// Method that runs when Select Gladiator 2 is clicked. 
+        /// Calls method SelectGladiator and displays error message if that method returns false.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSelectGladiator2_Click(object sender, RoutedEventArgs e)
+        {
+            bool valid = SelectGladiator();
+
+            if (!valid)
+            {
+                MessageBox.Show("Gladiator 2 cannot be the same as gladiator 1.");
+            }
         }
     }
 }

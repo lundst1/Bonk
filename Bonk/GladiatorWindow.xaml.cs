@@ -31,6 +31,7 @@ namespace Bonk
         private int? constitutionScore = null;
         //Private variable for instance of class Gladiator.
         private Gladiator gladiator;
+        private bool ignoreEvent = false;
         /// <summary>
         /// Public property for private variable gladiator.
         /// Read access.
@@ -47,6 +48,11 @@ namespace Bonk
             InitializeComponent();
             InitializeGUI();
         }
+        /// <summary>
+        /// Constructor for GladiatorWindow.
+        /// Takes one intance of class gladiator as argument and shows its information in the window.
+        /// </summary>
+        /// <param name="gladiator"></param>
         public GladiatorWindow(Gladiator gladiator) : this()
         {
             txtName.Text = gladiator.Name;
@@ -56,12 +62,20 @@ namespace Bonk
             int intelligence = gladiator.Intelligence;
             int constitution = gladiator.Constitution;
 
+            strengthScore = strength;
+            agilityScore = agility;
+            intelligenceScore = intelligence;
+            constitutionScore = constitution;
+
+            ignoreEvent = true;
             upDownStrength.Value = strength;
             upDownAgility.Value = agility;
             upDownIntelligence.Value = intelligence;
             upDownConstitution.Value = constitution;
+            ignoreEvent = false;
 
             remainingScore = remainingScore - strength - agility - intelligence - constitution;
+            lblRemainingAbilityScoreValue.Content = remainingScore.ToString();
 
             if (gladiator.GetType() == typeof(Mage))
             {
@@ -125,18 +139,20 @@ namespace Bonk
         /// <param name="e"></param>
         private void upDownStrength_ValueChanged(object sender, EventArgs e)
         {
-            int difference = CalculateDifference(upDownStrength.Value, strengthScore);
-            bool validRemainingScore = UpdateRemainingScores(difference);
-            
-            if (validRemainingScore)
+            if (!ignoreEvent)
             {
-                strengthScore = upDownStrength.Value;
-            }
-            else
-            {
-                upDownStrength.Value = strengthScore;
-            }
+                int difference = CalculateDifference(upDownStrength.Value, strengthScore);
+                bool validRemainingScore = UpdateRemainingScores(difference);
 
+                if (validRemainingScore)
+                {
+                    strengthScore = upDownStrength.Value;
+                }
+                else
+                {
+                    upDownStrength.Value = strengthScore;
+                }
+            }
         }
         /// <summary>
         /// Method that handles the event that the control upDownAgility has its value changed.
@@ -216,7 +232,15 @@ namespace Bonk
                 score = 0;
             }
             return valid;
-        } 
+        }
+        /// <summary>
+        /// Method that runs when the button Save is clicked.
+        /// Validates ability score and other data.
+        /// Creates an instance of class Gladiator.
+        /// Closes the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             bool valid = true;
@@ -264,6 +288,12 @@ namespace Bonk
                 this.Close();
             } 
         }
+        /// <summary>
+        /// Method that runs when button Cancel is clicked.
+        /// Closes the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {

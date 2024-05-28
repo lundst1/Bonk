@@ -59,6 +59,12 @@ namespace Bonk
         {
             bool success = gladiatorManager.ChangeAt(gladiator, index);
 
+            gladiator.Initiative += OnInitiative;
+            gladiator.Begin += OnBegin;
+            gladiator.Roll += OnRollToHit;
+            gladiator.Attack += OnRollForDamage;
+            gladiator.Faint += OnFaint;
+
             return success;
         }
         /// <summary>

@@ -19,13 +19,17 @@ namespace Bonk
         private Gladiator nonActiveGladiator;
         //Private variable for reference to the listview for the arena fights.
         private ListView lstArena;
+        private Dictionary<Gladiator, int> initiatives = new Dictionary<Gladiator, int>();
         public Arena(ListView lstArena) 
         { 
             this.lstArena = lstArena;
         }
         public void AddGladiator(Gladiator gladiator)
         {
+            gladiator.Initiative += OnInitiative;
+            gladiator.Begin += OnBegin;
             gladiator.Roll += OnRollToHit;
+            gladiator.Attack += OnRollForDamage;
             gladiatorManager.Add(gladiator);
         }
         public bool DeleteGladiator(int index)
@@ -50,6 +54,18 @@ namespace Bonk
             List<Gladiator> gladiatorList = gladiatorManager.List;
             return gladiatorList;
         }
+        public void OnInitiative(object sender, ArenaEventArgs e)
+        {
+            Gladiator gladiator = activeGladiator;
+            int initiative = e.Val;
+            initiatives[gladiator] = initiative;
+
+            DisplayEvent(new ArenaListViewItem{Name = e.Name, Message = e.Action });
+        }
+        public void OnBegin(object sender, ArenaEventArgs e)
+        {
+            DisplayEvent(new ArenaListViewItem { Name = e.Name, Message = e.Action });
+        }
 
         public void OnRollToHit(object sender, ArenaEventArgs e)
         {
@@ -63,13 +79,15 @@ namespace Bonk
             if (hitRoll > nonActiveGladiator.DefenseScore)
             {
                 message += ", and it hits!";
+                canAttack = true;
             }
             else
             {
                 message += ", and it misses!";
+                canAttack = false;
             }
 
-            //TODO: Display message
+            DisplayEvent(new ArenaListViewItem { Name = name, Message = message });
 
             if (canAttack)
             {
@@ -102,9 +120,9 @@ namespace Bonk
         {
 
         }
-        private void DisplayEvent()
+        private void DisplayEvent(ArenaListViewItem item)
         {
-
+            lstArena.Items.Add(item);
         }
         /// <summary>
         /// Private method to switch which gladiator is active.
@@ -115,6 +133,58 @@ namespace Bonk
             activeGladiator = nonActiveGladiator;
             nonActiveGladiator = oldActiveGladiator;
         }
+        public void Fight(Gladiator[] gladiators)
+        {
+            Gladiator gladiator1 = gladiators[0];
+            Gladiator gladiator2 = gladiators[1];
 
+            gladiator1.ResetCurrentHealthPoints();
+            gladiator2.ResetCurrentHealthPoints();
+
+            activeGladiator = gladiator1;
+            activeGladiator.OnRollInitiative();
+
+            activeGladiator = gladiator2;
+            activeGladiator.OnRollInitiative();
+
+            int initiative1 = initiatives[gladiator1];
+            int initiative2 = initiatives[gladiator2];
+
+            if (initiative1 != initiative2)
+            {
+                if (initiative1 > initiative2) 
+                { 
+                    activeGladiator = gladiator1;
+                }
+                if (initiative1 < initiative2)
+                {
+                    activeGladiator = gladiator2;
+                }
+            }
+            else
+            {
+                Random random = new Random();
+                int coinToss = random.Next(0, 1);
+
+                if (coinToss == 0) 
+                {
+                    activeGladiator = gladiator1;
+                }
+                else
+                {
+                    activeGladiator = gladiator2;
+                }
+            }
+
+            activeGladiator.OnBegin();
+
+            while (gladiator1.CurrentHealthPoints > 0 && gladiator2.CurrentHealthPoints > 0)
+            {
+                activeGladiator.OnRollHit();
+
+                Switch();
+            }
+
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Bonk.Gladiators
             base.Agility = agility;
             base.Intelligence = intelligence;
         }
-        public void OnRoll()
+        public override void OnRollHit()
         {
             int hitRoll = base.RollDice(20);
             hitRoll = hitRoll + Intelligence;

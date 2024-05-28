@@ -91,9 +91,16 @@ namespace Bonk
             get { return defenseScore; }
         }
         public delegate void EventHandler<ArenaEventArgs>(object sender, ArenaEventArgs e);
+        public event EventHandler<ArenaEventArgs> Initiative;
+        public event EventHandler<ArenaEventArgs> Begin;
         public event EventHandler<ArenaEventArgs> Roll;
         public event EventHandler<ArenaEventArgs> Attack;
         public event EventHandler<ArenaEventArgs> Faint;
+
+        public void ResetCurrentHealthPoints()
+        {
+            currentHealthPoints = maxHealthPoints;
+        }
 
         internal void RaiseRollEvent(ArenaEventArgs e)
         {
@@ -103,10 +110,24 @@ namespace Bonk
         {
             Attack(Name, e);
         }
+        public void OnRollInitiative()
+        {
+            int initiative = RollDice(20);
+            initiative += Agility;
+            string message = $"rolls for initiative ({initiative})";
+            ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, message, initiative);
+            Initiative(Name, arenaEventArgs);
+        }
+        public void OnBegin()
+        {
+            ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "begins", 0);
+            Begin(Name, arenaEventArgs);
+        }
         public void OnFaint()
         {
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "faints", 0);
         }
+        public virtual void OnRollHit() { }
 
         public virtual void OnAttack() { }
 

@@ -41,7 +41,8 @@
                 <ListView x:Name="lstArena" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="32,10,31,181">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn/>
+                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="Message" DisplayMemberBinding="{Binding Message}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -49,7 +50,7 @@
                 <Button x:Name="btnSelectGladiator2" Content="Select Gladiator 2" HorizontalAlignment="Left" Margin="221,308,0,0" VerticalAlignment="Top" Width="161" Click="btnSelectGladiator2_Click"/>
                 <Label x:Name="lblGladiator1" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="32,348,0,0" VerticalAlignment="Top" Width="161" BorderThickness="1" BorderBrush="#FF0A0909" Height="26" Background="White" Foreground="Black"/>
                 <Label x:Name="lblGladiator2" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="222,348,0,0" VerticalAlignment="Top" Width="160" BorderThickness="1" Background="#00000000" BorderBrush="#FF020202" Height="26"/>
-                <Button x:Name="btnStartFight" Content="Start fight" HorizontalAlignment="Center" Margin="0,392,0,0" VerticalAlignment="Top" Width="200"/>
+                <Button x:Name="btnStartFight" Content="Start fight" HorizontalAlignment="Center" Margin="0,392,0,0" Width="200" Click="btnStartFight_Click"/>
                 <Button x:Name="btnCreateGladiator" Content="Create" HorizontalAlignment="Left" Margin="-449,32,0,0" VerticalAlignment="Top" Width="96" Click="btnCreateGladiator_Click"/>
                 <Button x:Name="btnEditGladiator" Content="Edit" HorizontalAlignment="Left" Margin="-450,68,0,0" VerticalAlignment="Top" Width="96" Click="btnEditGladiator_Click"/>
                 <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="-450,100,0,0" VerticalAlignment="Top" Width="96" Click="btnDelete_Click"/>

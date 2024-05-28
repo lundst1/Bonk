@@ -49,8 +49,6 @@ namespace Bonk
             {
                 lblGladiator2.Content = fighters[1].Name;
             }
-
-
         }
         private void btnCreateGladiator_Click(object sender, RoutedEventArgs e)
         {
@@ -163,6 +161,11 @@ namespace Bonk
             {
                 MessageBox.Show("Gladiator 2 cannot be the same as gladiator 1.");
             }
+        }
+
+        private void btnStartFight_Click(object sender, RoutedEventArgs e)
+        {
+            arena.Fight(fighters);
         }
     }
 }

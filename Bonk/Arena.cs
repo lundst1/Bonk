@@ -24,36 +24,68 @@ namespace Bonk
         { 
             this.lstArena = lstArena;
         }
+        /// <summary>
+        /// Method to add gladiator to gladiatorManager.
+        /// Subscribes eventhandlers to events.
+        /// </summary>
+        /// <param name="gladiator">The gladiator to be added.</param>
         public void AddGladiator(Gladiator gladiator)
         {
             gladiator.Initiative += OnInitiative;
             gladiator.Begin += OnBegin;
             gladiator.Roll += OnRollToHit;
             gladiator.Attack += OnRollForDamage;
+            gladiator.Faint += OnFaint;
             gladiatorManager.Add(gladiator);
         }
+        /// <summary>
+        /// Method to delete gladiator given the gladiators index.
+        /// </summary>
+        /// <param name="index">The index of the gladiator.</param>
+        /// <returns>Returns true if the index is within bounds.</returns>
         public bool DeleteGladiator(int index)
         {
             bool success = gladiatorManager.DeleteAt(index);
         
             return success;
         }
+        /// <summary>
+        /// Method to update gladiator.
+        /// </summary>
+        /// <param name="index">The index of the gladiator to be updated.</param>
+        /// <param name="gladiator">The new gladiator.</param>
+        /// <returns>Returns true if the index is within bounds.</returns>
         public bool EditGladiator(int index, Gladiator gladiator)
         {
             bool success = gladiatorManager.ChangeAt(gladiator, index);
 
             return success;
         }
+        /// <summary>
+        /// Method to retrieve gladiator from gladiatorManager.
+        /// </summary>
+        /// <param name="index">The index of the gladiator.</param>
+        /// <returns>An instance of class Gladiator.</returns>
         public Gladiator GetGladiator(int index)
         {
             Gladiator gladiator = gladiatorManager.GetAt(index);
             return gladiator;
         }
+        /// <summary>
+        /// Method to retrieve the gladiators in gladiatorManager as a list.
+        /// </summary>
+        /// <returns>A list of instances of class Gladiator.</returns>
         public List<Gladiator> GetGladiatorList()
         {
             List<Gladiator> gladiatorList = gladiatorManager.List;
             return gladiatorList;
         }
+        /// <summary>
+        /// Eventhandler for initiative rolls.
+        /// Sets initiative for active gladiator.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnInitiative(object sender, ArenaEventArgs e)
         {
             Gladiator gladiator = activeGladiator;
@@ -62,6 +94,11 @@ namespace Bonk
 
             DisplayEvent(new ArenaListViewItem{Name = e.Name, Message = e.Action });
         }
+        /// <summary>
+        /// Eventhandler to pass the message on which gladiator begins.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnBegin(object sender, ArenaEventArgs e)
         {
             DisplayEvent(new ArenaListViewItem { Name = e.Name, Message = e.Action });
@@ -91,21 +128,7 @@ namespace Bonk
 
             if (canAttack)
             {
-                if (sender is Mage)
-                {
-                    Mage mage = (Mage)sender;
-                    mage.OnAttack();
-                }
-                if (sender is Rouge)
-                {
-                    Rouge rouge = (Rouge)sender;
-                    rouge.OnAttack();
-                }
-                if (sender is Warrior)
-                {
-                    Warrior warrior = (Warrior)sender;
-                    warrior.OnAttack();
-                }
+                activeGladiator.OnAttack();
             }
 
         }
@@ -114,11 +137,11 @@ namespace Bonk
             int damage = e.Val;
             nonActiveGladiator.CurrentHealthPoints -= damage;
 
-            //TODO: Display message
+            DisplayEvent(new ArenaListViewItem { Name = e.Name, Message = e.Action });
         }
-        public void OnFaint()
+        public void OnFaint(object sender, ArenaEventArgs e)
         {
-
+            DisplayEvent(new ArenaListViewItem { Name = e.Name, Message = e.Action});
         }
         private void DisplayEvent(ArenaListViewItem item)
         {
@@ -135,15 +158,15 @@ namespace Bonk
         }
         public void Fight(Gladiator[] gladiators)
         {
+            lstArena.Items.Clear();
+
             Gladiator gladiator1 = gladiators[0];
             Gladiator gladiator2 = gladiators[1];
-
             gladiator1.ResetCurrentHealthPoints();
             gladiator2.ResetCurrentHealthPoints();
 
             activeGladiator = gladiator1;
             activeGladiator.OnRollInitiative();
-
             activeGladiator = gladiator2;
             activeGladiator.OnRollInitiative();
 
@@ -155,10 +178,12 @@ namespace Bonk
                 if (initiative1 > initiative2) 
                 { 
                     activeGladiator = gladiator1;
+                    nonActiveGladiator = gladiator2;
                 }
                 if (initiative1 < initiative2)
                 {
                     activeGladiator = gladiator2;
+                    nonActiveGladiator = gladiator1;
                 }
             }
             else
@@ -169,10 +194,12 @@ namespace Bonk
                 if (coinToss == 0) 
                 {
                     activeGladiator = gladiator1;
+                    nonActiveGladiator = gladiator2;
                 }
                 else
                 {
                     activeGladiator = gladiator2;
+                    nonActiveGladiator = gladiator1;
                 }
             }
 
@@ -185,6 +212,14 @@ namespace Bonk
                 Switch();
             }
 
+            if (gladiator1.CurrentHealthPoints <= 0)
+            {
+                gladiator1.OnFaint();
+            }
+            if (gladiator2.CurrentHealthPoints <= 0)
+            {
+                gladiator2.OnFaint();
+            }
         }
     }
 }

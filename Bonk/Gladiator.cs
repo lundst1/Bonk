@@ -89,6 +89,7 @@ namespace Bonk
         public int DefenseScore
         {
             get { return defenseScore; }
+            set { defenseScore = value; }
         }
         public delegate void EventHandler<ArenaEventArgs>(object sender, ArenaEventArgs e);
         public event EventHandler<ArenaEventArgs> Initiative;
@@ -97,6 +98,22 @@ namespace Bonk
         public event EventHandler<ArenaEventArgs> Attack;
         public event EventHandler<ArenaEventArgs> Faint;
 
+        public Gladiator() { }
+
+        public Gladiator(string name, int strength, int agility, int intelligence, int constitution) : this()
+        {
+            Name = name;
+            Strength = strength;
+            Agility = agility;
+            Intelligence = intelligence;
+            Constitution = constitution;
+
+            CalculateMaxHealthPoints();
+        }
+        private void CalculateMaxHealthPoints()
+        {
+            maxHealthPoints = RollDice(20) + Constitution; 
+        }
         public void ResetCurrentHealthPoints()
         {
             currentHealthPoints = maxHealthPoints;
@@ -126,6 +143,7 @@ namespace Bonk
         public void OnFaint()
         {
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "faints", 0);
+            Faint(Name, arenaEventArgs);
         }
         public virtual void OnRollHit() { }
 

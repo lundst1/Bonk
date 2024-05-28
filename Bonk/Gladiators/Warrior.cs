@@ -8,12 +8,9 @@ namespace Bonk.Gladiators
 {
     public class Warrior : Gladiator
     {
-        public Warrior(string name, int strength, int agility, int intelligence, int constitution)
+        public Warrior(string name, int strength, int agility, int intelligence, int constitution) : base(name, strength, agility, intelligence, constitution)
         {
-            base.Name = name;
-            base.Strength = strength;
-            base.Agility = agility;
-            base.Intelligence = intelligence;
+            CalculateDefenseScore();
         }
         public override void OnRollHit()
         {
@@ -26,8 +23,13 @@ namespace Bonk.Gladiators
         {
             int attackRoll = base.RollDice(20);
             attackRoll = attackRoll + Strength;
-            ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "deals damage", attackRoll);
+            string message = $"deals {attackRoll} damage";
+            ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, message, attackRoll);
             base.RaiseAttackEvent(arenaEventArgs);
+        }
+        private void CalculateDefenseScore()
+        {
+            base.DefenseScore = RollDice(20) + base.Strength;
         }
     }
 }

@@ -30,6 +30,8 @@
                         <GridView>
                             <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
                             <GridViewColumn Header="Class" DisplayMemberBinding="{Binding Class}"/>
+                            <GridViewColumn Header="Hit points" DisplayMemberBinding="{Binding MaxHitPoints}"/>
+                            <GridViewColumn Header="Defense score" DisplayMemberBinding="{Binding DefenseScore}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace Bonk
 {
+    /// <summary>
+    /// Class for a gladiator.
+    /// Is extended by classes Mage, Rouge and Warrior.
+    /// Implements interface IGladiator.
+    /// </summary>
     public class Gladiator : IGladiator
     {
         //Private string variable for the gladiators name.
@@ -105,15 +110,30 @@ namespace Bonk
             get { return defenseScore; }
             set { defenseScore = value; }
         }
+        //Delegate to be used for the gladiators arena events.
         public delegate void EventHandler<ArenaEventArgs>(object sender, ArenaEventArgs e);
+        //Event for rolling initiative.
         public event EventHandler<ArenaEventArgs> Initiative;
+        //Event for beginning.
         public event EventHandler<ArenaEventArgs> Begin;
+        //Event for rolling to hit or miss.
         public event EventHandler<ArenaEventArgs> Roll;
+        //Event for rolling damage.
         public event EventHandler<ArenaEventArgs> Attack;
+        //Event for fainting.
         public event EventHandler<ArenaEventArgs> Faint;
-
+        /// <summary>
+        /// Constructor for class Gladiator.
+        /// </summary>
         public Gladiator() { }
-
+        /// <summary>
+        /// Constructor for Gladiator.
+        /// </summary>
+        /// <param name="name">The name of the gladiator.</param>
+        /// <param name="strength">The strength score of the gladiator.</param>
+        /// <param name="agility">The ability score of the gladiator.</param>
+        /// <param name="intelligence">The intelligence score of the gladiator.</param>
+        /// <param name="constitution">The constitution score of the gladiator.</param>
         public Gladiator(string name, int strength, int agility, int intelligence, int constitution) : this()
         {
             Name = name;
@@ -124,23 +144,42 @@ namespace Bonk
 
             CalculateMaxHealthPoints();
         }
+        /// <summary>
+        /// Method to calculate maximum health points.
+        /// </summary>
         private void CalculateMaxHealthPoints()
         {
             maxHealthPoints = RollDice(20) + Constitution; 
         }
+        /// <summary>
+        /// Method to reset current health points.
+        /// </summary>
         public void ResetCurrentHealthPoints()
         {
             currentHealthPoints = maxHealthPoints;
         }
-
+        /// <summary>
+        /// Method for raising the event Roll.
+        /// Is used by extended classes Mage, Rouge and Warrior.
+        /// </summary>
+        /// <param name="e">The event arguments for the event.</param>
         internal void RaiseRollEvent(ArenaEventArgs e)
         {
             Roll(Name, e);
         }
+        /// <summary>
+        /// Method for raising the event Attack.
+        /// Is used by extended classes Mage, Rouge and Warrior.
+        /// </summary>
+        /// <param name="e">The event arguments for the event.</param>
         internal void RaiseAttackEvent(ArenaEventArgs e)
         {
             Attack(Name, e);
         }
+        /// <summary>
+        /// Method to raise the event Initiative.
+        /// Calculates initiative and raises the event.
+        /// </summary>
         public void OnRollInitiative()
         {
             int initiative = RollDice(20);
@@ -149,20 +188,35 @@ namespace Bonk
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, message, initiative);
             Initiative(Name, arenaEventArgs);
         }
+        /// <summary>
+        /// Method to raise the event Begin.
+        /// </summary>
         public void OnBegin()
         {
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "begins", 0);
             Begin(Name, arenaEventArgs);
         }
+        /// <summary>
+        /// Method to raise the event Faint.
+        /// </summary>
         public void OnFaint()
         {
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "faints", 0);
             Faint(Name, arenaEventArgs);
         }
+        /// <summary>
+        /// Virtual method that is overridden by extending classes Mage, Rouge and Warrior.
+        /// </summary>
         public virtual void OnRollHit() { }
-
+        /// <summary>
+        /// Virtual method that is overridden by extending classes Mage, Rouge and Warrior.
+        /// </summary>
         public virtual void OnAttack() { }
-
+        /// <summary>
+        /// Method that simulates rolling a dice. 
+        /// </summary>
+        /// <param name="sides">An integer corresponding the amount of sides the dice has.</param>
+        /// <returns>An integer between 1 and the given integer.</returns>
         public int RollDice(int sides)
         {
             int result;

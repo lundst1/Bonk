@@ -98,6 +98,10 @@ namespace Bonk
             lblRemainingAbilityScoreValue.Content = remainingScore.ToString();
             cBoxClass.ItemsSource = Enum.GetValues(typeof(Classes)).Cast<Classes>();
             cBoxClass.SelectedIndex = 0;
+            upDownStrength.Value = 0;
+            upDownAgility.Value = 0;
+            upDownIntelligence.Value = 0;
+            upDownConstitution.Value = 0;
         }
         /// <summary>
         /// Method that updates how many remaining scorepoints exist.

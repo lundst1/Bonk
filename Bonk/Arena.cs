@@ -9,6 +9,9 @@ using System.Windows.Controls;
 
 namespace Bonk
 {
+    /// <summary>
+    /// Class for handling gladiators and their fights.
+    /// </summary>
     public class Arena
     { 
         //Private variable for instance of ListManager<Gladiator>.
@@ -86,13 +89,22 @@ namespace Bonk
             List<Gladiator> gladiatorList = gladiatorManager.List;
             return gladiatorList;
         }
+        /// <summary>
+        /// Method to serialize gladiators to json.
+        /// Calls method SerializeJson in gladiatorManager.
+        /// </summary>
+        /// <param name="filename">The name of the file that data is to written to.</param>
         public void SerializeGladiators(string filename)
         {
             gladiatorManager.SerializeJson(filename);
         }
+        /// <summary>
+        /// Method to deserialize json files to gladiators.
+        /// </summary>
+        /// <param name="filename">The filename of the file from where the data is to be read from.</param>
         public void DeSerializeGladiators(string filename)
         {
-            gladiatorManager.DeserializeJson(filename, new GladiatorConverter());
+           gladiatorManager.DeserializeJson(filename, new GladiatorConverter());
         }
         /// <summary>
         /// Eventhandler for initiative rolls.
@@ -117,7 +129,13 @@ namespace Bonk
         {
             DisplayEvent(new ArenaListViewItem { Name = e.Name, Message = e.Action });
         }
-
+        /// <summary>
+        /// Eventhandler for the roll to hit the other gladiator.
+        /// Tests the hitscore against the non active gladiators defense score.
+        /// Displays the event in ListView lstArena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnRollToHit(object sender, ArenaEventArgs e)
         {
             string name = e.Name;
@@ -146,6 +164,13 @@ namespace Bonk
             }
 
         }
+        /// <summary>
+        /// Eventhandler for the roll for damage.
+        /// Subtracts the damage from the non active gladiator.
+        /// Displays the event in ListView lstArena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnRollForDamage(object sender, ArenaEventArgs e) 
         {
             int damage = e.Val;
@@ -153,6 +178,12 @@ namespace Bonk
 
             DisplayEvent(new ArenaListViewItem { Name = e.Name, Message = e.Action });
         }
+        /// <summary>
+        /// Eventhandler for when the gladiator faints.
+        /// Displays the event in ListView lstArena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnFaint(object sender, ArenaEventArgs e)
         {
             DisplayEvent(new ArenaListViewItem { Name = e.Name, Message = e.Action});
@@ -170,6 +201,10 @@ namespace Bonk
             activeGladiator = nonActiveGladiator;
             nonActiveGladiator = oldActiveGladiator;
         }
+        /// <summary>
+        /// Method that runs the fight between two gladiators.
+        /// </summary>
+        /// <param name="gladiators">An array containing two gladiators.</param>
         public void Fight(Gladiator[] gladiators)
         {
             lstArena.Items.Clear();

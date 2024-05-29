@@ -31,6 +31,9 @@ namespace Bonk
             InitializeComponent();
             arena = new Arena(lstArena);
         }
+        /// <summary>
+        /// Method that updates graphical elements of MainWindow.
+        /// </summary>
         public void UpdateGUI()
         {
             lstGladiators.Items.Clear();
@@ -41,8 +44,10 @@ namespace Bonk
                 Gladiator gladiator = gladiatorList[i];
                 string name = gladiator.Name;
                 string gladClass = gladiator.GetType().Name;
+                int maxHitPoints = gladiator.MaxHealthPoints;
+                int defenseScore = gladiator.DefenseScore;
 
-                lstGladiators.Items.Add(new GladiatorListViewItem { Name = name, Class = gladClass, Index = i });
+                lstGladiators.Items.Add(new GladiatorListViewItem { Name = name, Class = gladClass, MaxHitPoints = maxHitPoints, DefenseScore = defenseScore, Index = i });
             }
 
             if (fighters[0] != null)
@@ -54,6 +59,12 @@ namespace Bonk
                 lblGladiator2.Content = fighters[1].Name;
             }
         }
+        /// <summary>
+        /// Method that runs when button Create gladiator is clicked.
+        /// Starts instance of GladiatorWindow and passes results method AddGladiator in class Arena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCreateGladiator_Click(object sender, RoutedEventArgs e)
         {
             Gladiator gladiator;
@@ -71,6 +82,13 @@ namespace Bonk
             }
 
         }
+        /// <summary>
+        /// Method that runs when button Edit gladiator is clicked.
+        /// Retrieves gladiator and passes it to an instance of GladiatorWindow.
+        /// Passes result method EditGladiator in class Arena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEditGladiator_Click(object sender, RoutedEventArgs e)
         {
             if (lstGladiators.SelectedIndex != -1)
@@ -92,7 +110,12 @@ namespace Bonk
                 }
             }
         }
-
+        /// <summary>
+        /// Method that runs when button gladiator is clicked.
+        /// Calls method DeleteGladiator in class Arena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (lstGladiators.SelectedIndex != -1)
@@ -104,6 +127,12 @@ namespace Bonk
                 UpdateGUI();
             }
         }
+        /// <summary>
+        /// Method to select gladiators as fighters.
+        /// Places selected gladiator at index point in array fighters.
+        /// </summary>
+        /// <param name="index">The goal index in array fighters.</param>
+        /// <returns>Returns true if the selected gladiators are not duplicates.</returns>
         private bool SelectGladiator(int index)
         {
             bool valid = true;
@@ -128,8 +157,17 @@ namespace Bonk
                 }
                 if (fighters[index] == null)
                 {
-                    fighters[index] = gladiator;
-                    UpdateGUI();
+                    int otherIndex = Math.Abs(index - 1);
+
+                    if (fighters[otherIndex] == gladiator)
+                    {
+                        valid = false;
+                    }
+                    else
+                    {
+                        fighters[index] = gladiator;
+                        UpdateGUI();
+                    }
                 }
 
             }
@@ -187,8 +225,18 @@ namespace Bonk
             lstArena.Items.Clear();
             arena = new Arena(lstArena);
             filename = string.Empty;
+            Array.Clear(fighters, 0, fighters.Length);
+            lblGladiator1.Content = string.Empty;
+            lblGladiator2.Content = string.Empty;
             UpdateGUI();
         }
+        /// <summary>
+        /// Method that runs when menu item Save is clicked.
+        /// Starts dialog if no output file name is chosen, otherwise uses that filename to save data.
+        /// Calls method SerializeGladiators in class Arena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             if (filename == string.Empty)
@@ -207,6 +255,13 @@ namespace Bonk
                 arena.SerializeGladiators(filename);
             }
         }
+        /// <summary>
+        /// Method that runs when menu item Save as is clicked.
+        /// Starts dialog to chose output filename.
+        /// Calls method SerializeGladiators in class Arena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSaveAs_Click(object sender, RoutedEventArgs e)
         {
             CommonSaveFileDialog commonSaveFileDialog = new CommonSaveFileDialog();
@@ -218,10 +273,31 @@ namespace Bonk
                 arena.SerializeGladiators(filename);
             }
         }
+        /// <summary>
+        /// Method that runs when menu item Open is clicked.
+        /// Opens file dialog to get path and filename.
+        /// Passes it to method DeSerializeGladiators in class Arena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
+            CommonOpenFileDialog commonOpenFileDialog = new CommonOpenFileDialog();
+            CommonFileDialogResult result = commonOpenFileDialog.ShowDialog();
 
+            if (result == CommonFileDialogResult.Ok)
+            {
+                filename = commonOpenFileDialog.FileName;
+                arena.DeSerializeGladiators(filename);
+                UpdateGUI();
+            }
         }
+        /// <summary>
+        /// Method that runs when menu item Close is clicked. 
+        /// Closes the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();

@@ -24,7 +24,7 @@ namespace Bonk
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             JObject jsonObject = JObject.Load(reader);
-            string gladiator = jsonObject["Gladiator"].ToString();
+            string gladiator = jsonObject["GladiatorClass"].ToString();
 
             switch (gladiator)
             {

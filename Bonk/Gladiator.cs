@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Bonk.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace Bonk
@@ -24,6 +26,8 @@ namespace Bonk
         private int maxHealthPoints;
         //Private int for the gladiators defence score
         private int defenseScore;
+        //Private enum variable for the class of the gladiator.
+        private Classes gladiatorClass;
        /// <summary>
        /// Public property for variable name.
        /// Read access.
@@ -73,10 +77,20 @@ namespace Bonk
         /// Property for variable currentHealthPoints.
         /// Both read and write access.
         /// </summary>
+        [JsonIgnore]
         public int CurrentHealthPoints
         {
             get { return currentHealthPoints; }
             set { currentHealthPoints = value; }
+        }
+        /// <summary>
+        /// Property for variable gladiatorClass.
+        /// Both read and write access.
+        /// </summary>
+        public Classes GladiatorClass
+        {
+            get { return gladiatorClass; }
+            set { gladiatorClass = value; }
         }
         /// <summary>
         /// Property for variable maxHealthPoints.

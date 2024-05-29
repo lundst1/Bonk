@@ -11,7 +11,8 @@
             <ColumnDefinition Width="263*"/>
             <ColumnDefinition Width="21*"/>
             <ColumnDefinition Width="17*"/>
-            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="115*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <GroupBox Header="Manage Gladiators" Margin="0,23,122,0" RenderTransformOrigin="0.5,0.5">
@@ -32,11 +33,9 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Content="Button" HorizontalAlignment="Left" Margin="-346,323,0,0" VerticalAlignment="Top"/>
-
             </Grid>
         </GroupBox>
-        <GroupBox x:Name="grpArena" Header="Arena" Margin="421,23,0,0" Grid.ColumnSpan="4">
+        <GroupBox x:Name="grpArena" Header="Arena" Margin="421,23,0,0" Grid.ColumnSpan="5">
             <Grid Margin="32,0,14,0" Height="411">
                 <ListView x:Name="lstArena" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="32,10,31,181">
                     <ListView.View>
@@ -56,14 +55,15 @@
                 <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="-450,100,0,0" VerticalAlignment="Top" Width="96" Click="btnDelete_Click"/>
             </Grid>
         </GroupBox>
-        <ComboBox Grid.Column="4" HorizontalAlignment="Left" Margin="93,-74,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
-        <DockPanel LastChildFill="False" Grid.ColumnSpan="4" Margin="0,0,0,460">
+        <ComboBox Grid.Column="5" HorizontalAlignment="Left" Margin="93,-74,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <DockPanel LastChildFill="False" Grid.ColumnSpan="5" Margin="0,0,0,460">
             <Menu DockPanel.Dock="Top" Height="20">
                 <MenuItem Header="_File" Width="67">
-                    <MenuItem Header="_New"/>
-                    <MenuItem Header="_Save"/>
-                    <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Close"/>
+                    <MenuItem x:Name="btnNew" Header="_New" Click="btnNew_Click"/>
+                    <MenuItem x:Name="btnSave" Header="_Save" Click="btnSave_Click"/>
+                    <MenuItem x:Name="btnSaveAs" Header="_Save as" Click="btnSaveAs_Click"/>
+                    <MenuItem x:Name="btnOpen" Header="_Open" Click="btnOpen_Click"/>
+                    <MenuItem x:Name="btnClose" Header="_Close" Click="btnClose_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

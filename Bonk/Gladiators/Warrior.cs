@@ -11,6 +11,7 @@ namespace Bonk.Gladiators
         public Warrior(string name, int strength, int agility, int intelligence, int constitution) : base(name, strength, agility, intelligence, constitution)
         {
             CalculateDefenseScore();
+            base.GladiatorClass = Enums.Classes.Warrior;
         }
         public override void OnRollHit()
         {

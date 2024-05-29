@@ -86,6 +86,14 @@ namespace Bonk
             List<Gladiator> gladiatorList = gladiatorManager.List;
             return gladiatorList;
         }
+        public void SerializeGladiators(string filename)
+        {
+            gladiatorManager.SerializeJson(filename);
+        }
+        public void DeSerializeGladiators(string filename)
+        {
+            gladiatorManager.DeserializeJson(filename, new GladiatorConverter());
+        }
         /// <summary>
         /// Eventhandler for initiative rolls.
         /// Sets initiative for active gladiator.

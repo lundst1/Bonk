@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Bonk
 {
@@ -18,7 +19,10 @@ namespace Bonk
     {
         //Private variable for instance of class Arena.
         private Arena arena;
+        //Private array of gladiators. Used for passing gladiators to fight in the arena.
         private Gladiator[] fighters = new Gladiator[2];
+        //Private string variable
+        private string filename = string.Empty;
         /// <summary>
         /// Constructor for MainWindow.
         /// </summary>
@@ -100,31 +104,31 @@ namespace Bonk
                 UpdateGUI();
             }
         }
-        private bool SelectGladiator()
+        private bool SelectGladiator(int index)
         {
             bool valid = true;
 
             if (lstGladiators.SelectedIndex != -1)
             {
                 GladiatorListViewItem item = (GladiatorListViewItem)lstGladiators.SelectedItems[0];
-                int index = item.Index;
-                Gladiator gladiator = arena.GetGladiator(index);
+                int gladiatorIndex = item.Index;
+                Gladiator gladiator = arena.GetGladiator(gladiatorIndex);
 
-                if (fighters[0] != null) 
+                if (fighters[index] != null) 
                 { 
-                    if (fighters[0] == gladiator)
+                    if (fighters[index] == gladiator)
                     {
                         valid = false;
                     }
                     else
                     {
-                        fighters[1] = gladiator;
+                        fighters[index] = gladiator;
                         UpdateGUI();
                     }
                 }
-                if (fighters[0] == null)
+                if (fighters[index] == null)
                 {
-                    fighters[0] = gladiator;
+                    fighters[index] = gladiator;
                     UpdateGUI();
                 }
 
@@ -139,7 +143,7 @@ namespace Bonk
         /// <param name="e"></param>
         private void btnSelectGladiator1_Click(object sender, RoutedEventArgs e)
         {
-            bool valid = SelectGladiator();
+            bool valid = SelectGladiator(0);
 
             if (!valid)
             {
@@ -155,17 +159,72 @@ namespace Bonk
         /// <param name="e"></param>
         private void btnSelectGladiator2_Click(object sender, RoutedEventArgs e)
         {
-            bool valid = SelectGladiator();
+            bool valid = SelectGladiator(1);
 
             if (!valid)
             {
                 MessageBox.Show("Gladiator 2 cannot be the same as gladiator 1.");
             }
         }
-
+        /// <summary>
+        /// Method that runs when button Start fight is clicked.
+        /// Calls method Fight in class Arena.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnStartFight_Click(object sender, RoutedEventArgs e)
         {
             arena.Fight(fighters);
+        }
+        /// <summary>
+        /// Method that runs when menu item New is clicked.
+        /// Clears the arena list, starts new instance of arena and updates GUI elements.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnNew_Click(object sender, RoutedEventArgs e)
+        {
+            lstArena.Items.Clear();
+            arena = new Arena(lstArena);
+            filename = string.Empty;
+            UpdateGUI();
+        }
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (filename == string.Empty)
+            {
+                CommonSaveFileDialog commonSaveFileDialog = new CommonSaveFileDialog();
+                CommonFileDialogResult result = commonSaveFileDialog.ShowDialog();
+
+                if (result == CommonFileDialogResult.Ok)
+                {
+                    filename = commonSaveFileDialog.FileName;
+                    arena.SerializeGladiators(filename);
+                }
+            }
+            else
+            {
+                arena.SerializeGladiators(filename);
+            }
+        }
+        private void btnSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            CommonSaveFileDialog commonSaveFileDialog = new CommonSaveFileDialog();
+            CommonFileDialogResult result = commonSaveFileDialog.ShowDialog();
+
+            if (result == CommonFileDialogResult.Ok)
+            {
+                filename = commonSaveFileDialog.FileName;
+                arena.SerializeGladiators(filename);
+            }
+        }
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

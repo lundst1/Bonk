@@ -25,9 +25,13 @@ namespace Bonk
     {
         //Private integer variable for remaining ability scores.
         private int remainingScore = 20;
+        //Private nullable integer for the gladiators strength score.
         private int? strengthScore = null;
+        //Private nullable integer for the gladiators agility score.
         private int? agilityScore = null;
+        //Private nullable integer for the gladiators intelligence score.
         private int? intelligenceScore = null;
+        //Private nullable integer for the gladiators constitution score.
         private int? constitutionScore = null;
         //Private variable for instance of class Gladiator.
         private Gladiator gladiator;

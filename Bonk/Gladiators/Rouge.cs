@@ -30,7 +30,7 @@ namespace Bonk.Gladiators
         /// Method to roll for hitting the opponent.
         /// Calculates a hitroll and raises event for rolling to hit.
         /// </summary>
-        public override void OnRollHit()
+        public override void ActionRollHit()
         {
             int hitRoll = base.RollDice(20);
             hitRoll = hitRoll + Agility;
@@ -41,7 +41,7 @@ namespace Bonk.Gladiators
         /// Method to roll for damage.
         /// Calculates damage and raises event for rolling damage.
         /// </summary>
-        public override void OnAttack()
+        public override void ActionAttack()
         {
             int attackRoll = base.RollDice(20);
             attackRoll = attackRoll + Agility;

@@ -105,6 +105,10 @@ namespace Bonk
         {
             get { return maxHealthPoints;  } 
         }
+        /// <summary>
+        /// Property for the variable defenseScore.
+        /// Both read and write access.
+        /// </summary>
         public int DefenseScore
         {
             get { return defenseScore; }
@@ -180,7 +184,7 @@ namespace Bonk
         /// Method to raise the event Initiative.
         /// Calculates initiative and raises the event.
         /// </summary>
-        public void OnRollInitiative()
+        public void ActionRollInitiative()
         {
             int initiative = RollDice(20);
             initiative += Agility;
@@ -191,7 +195,7 @@ namespace Bonk
         /// <summary>
         /// Method to raise the event Begin.
         /// </summary>
-        public void OnBegin()
+        public void ActionBegin()
         {
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "begins", 0);
             Begin(Name, arenaEventArgs);
@@ -199,7 +203,7 @@ namespace Bonk
         /// <summary>
         /// Method to raise the event Faint.
         /// </summary>
-        public void OnFaint()
+        public void ActionFaint()
         {
             ArenaEventArgs arenaEventArgs = new ArenaEventArgs(Name, "faints", 0);
             Faint(Name, arenaEventArgs);
@@ -207,11 +211,11 @@ namespace Bonk
         /// <summary>
         /// Virtual method that is overridden by extending classes Mage, Rouge and Warrior.
         /// </summary>
-        public virtual void OnRollHit() { }
+        public virtual void ActionRollHit() { }
         /// <summary>
         /// Virtual method that is overridden by extending classes Mage, Rouge and Warrior.
         /// </summary>
-        public virtual void OnAttack() { }
+        public virtual void ActionAttack() { }
         /// <summary>
         /// Method that simulates rolling a dice. 
         /// </summary>

@@ -107,6 +107,7 @@ namespace Bonk
                     gladiator = gladiatorWindow.Gladiator;
                     arena.EditGladiator(index, gladiator);
                     UpdateGUI();
+                    ClearFighters();
                 }
             }
         }
@@ -125,6 +126,7 @@ namespace Bonk
 
                 arena.DeleteGladiator(index);
                 UpdateGUI();
+                ClearFighters();
             }
         }
         /// <summary>
@@ -212,7 +214,34 @@ namespace Bonk
         /// <param name="e"></param>
         private void btnStartFight_Click(object sender, RoutedEventArgs e)
         {
-            arena.Fight(fighters);
+            if (fighters[0] != null && fighters[1] != null)
+            {
+                arena.Fight(fighters);
+            }
+            else
+            {
+                MessageBox.Show("Please select two gladiators to fight");
+            }
+                
+        }
+        /// <summary>
+        /// Clears the list of gladiators and the labels containing their names.
+        /// </summary>
+        private void ClearFighters()
+        {
+            fighters = new Gladiator[2];
+            lblGladiator1.Content = string.Empty;
+            lblGladiator2.Content = string.Empty;
+        }
+        /// <summary>
+        /// Method that runs when button Clear is clicked.
+        /// Calls private method ClearGladiators.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            ClearFighters();
         }
         /// <summary>
         /// Method that runs when menu item New is clicked.

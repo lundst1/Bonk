@@ -160,7 +160,7 @@ namespace Bonk
 
             if (canAttack)
             {
-                activeGladiator.OnAttack();
+                activeGladiator.ActionAttack();
             }
 
         }
@@ -215,9 +215,9 @@ namespace Bonk
             gladiator2.ResetCurrentHealthPoints();
 
             activeGladiator = gladiator1;
-            activeGladiator.OnRollInitiative();
+            activeGladiator.ActionRollInitiative();
             activeGladiator = gladiator2;
-            activeGladiator.OnRollInitiative();
+            activeGladiator.ActionRollInitiative();
 
             int initiative1 = initiatives[gladiator1];
             int initiative2 = initiatives[gladiator2];
@@ -252,22 +252,22 @@ namespace Bonk
                 }
             }
 
-            activeGladiator.OnBegin();
+            activeGladiator.ActionBegin();
 
             while (gladiator1.CurrentHealthPoints > 0 && gladiator2.CurrentHealthPoints > 0)
             {
-                activeGladiator.OnRollHit();
+                activeGladiator.ActionRollHit();
 
                 Switch();
             }
 
             if (gladiator1.CurrentHealthPoints <= 0)
             {
-                gladiator1.OnFaint();
+                gladiator1.ActionFaint();
             }
             if (gladiator2.CurrentHealthPoints <= 0)
             {
-                gladiator2.OnFaint();
+                gladiator2.ActionFaint();
             }
         }
     }

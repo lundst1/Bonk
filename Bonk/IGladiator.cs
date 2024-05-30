@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bonk
 {
+    /// <summary>
+    /// Interface for gladiator class.
+    /// </summary>
     interface IGladiator
     {
         /// <summary>
@@ -33,6 +36,14 @@ namespace Bonk
         /// Read access.
         /// </summary>
         int Constitution { get; }
-    
+        /// <summary>
+        /// Method where the gladiator rolls to hit.
+        /// </summary>
+        public void ActionRollHit();
+        /// <summary>
+        /// Method where the gladiator rolls for damage.
+        /// </summary>
+        public void ActionAttack();
+
     }
 }

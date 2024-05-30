@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Bonk.Enums
 {
+    /// <summary>
+    /// Enum values for gladiator classes.
+    /// </summary>
     public enum Classes
     {
         Mage,

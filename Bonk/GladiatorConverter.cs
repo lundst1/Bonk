@@ -33,7 +33,7 @@ namespace Bonk
                 case "1":
                     return jsonObject.ToObject<Rouge>();
                 case "2":
-                    return jsonObject.ToObject<Wizard>();
+                    return jsonObject.ToObject<Warrior>();
                 default:
                     throw new NotSupportedException($"Gladiator type '{gladiator}' is not supported.");
             }

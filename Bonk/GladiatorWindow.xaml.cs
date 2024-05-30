@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Bonk.Enums;
 using Bonk.Gladiators;
+using Newtonsoft.Json;
 
 namespace Bonk
 {
@@ -26,6 +27,7 @@ namespace Bonk
         //Private integer variable for remaining ability scores.
         private int remainingScore = 20;
         //Private nullable integer for the gladiators strength score.
+        [JsonIgnore]
         private int? strengthScore = null;
         //Private nullable integer for the gladiators agility score.
         private int? agilityScore = null;

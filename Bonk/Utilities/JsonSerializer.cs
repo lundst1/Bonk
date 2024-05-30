@@ -35,8 +35,9 @@ namespace Utilities
         public List<T> DeSerializeJson(string filename, JsonConverter jsonConverter)
         {
             string jsonString = File.ReadAllText(filename);
-            List<T> values = JsonConvert.DeserializeObject<List<T>>(jsonString, jsonConverter);
-
+            
+            List<T> values =  JsonConvert.DeserializeObject<List<T>>(jsonString, jsonConverter);
+            
             return values;
         }
 

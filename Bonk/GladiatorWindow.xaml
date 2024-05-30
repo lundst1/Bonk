@@ -24,7 +24,7 @@
             </Grid>
         </GroupBox>
         <Label x:Name="lblName" Content="Name" HorizontalAlignment="Left" Margin="51,29,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.816,0.541" Width="49"/>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="106,35,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="200"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="106,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="lblClass" Content="Class" HorizontalAlignment="Left" Margin="54,66,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cBoxClass" HorizontalAlignment="Left" Margin="106,68,0,0" VerticalAlignment="Top" Width="110"/>
         <Button x:Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="76,440,0,0" VerticalAlignment="Top" Width="108" Height="24" Click="btnSave_Click"/>

@@ -105,6 +105,15 @@ namespace Bonk
         public void DeSerializeGladiators(string filename)
         {
            gladiatorManager.DeserializeJson(filename, new GladiatorConverter());
+
+            foreach(Gladiator gladiator in gladiatorManager.List)
+            {
+                gladiator.Initiative += OnInitiative;
+                gladiator.Begin += OnBegin;
+                gladiator.Roll += OnRollToHit;
+                gladiator.Attack += OnRollForDamage;
+                gladiator.Faint += OnFaint;
+            }
         }
         /// <summary>
         /// Eventhandler for initiative rolls.

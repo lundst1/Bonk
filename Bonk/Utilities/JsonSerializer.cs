@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using Microsoft.WindowsAPICodePack.Shell.Interop;
+using System.Windows;
 
 namespace Utilities
 {
@@ -36,9 +38,18 @@ namespace Utilities
         {
             string jsonString = File.ReadAllText(filename);
             
-            List<T> values =  JsonConvert.DeserializeObject<List<T>>(jsonString, jsonConverter);
+            try
+            {
+                List<T> values = JsonConvert.DeserializeObject<List<T>>(jsonString, jsonConverter);
+                return values;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return new List<T>();
+            }
             
-            return values;
+           
         }
 
     }

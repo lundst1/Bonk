@@ -271,6 +271,7 @@ namespace Bonk
             if (filename == string.Empty)
             {
                 CommonSaveFileDialog commonSaveFileDialog = new CommonSaveFileDialog();
+                commonSaveFileDialog.DefaultExtension = "json";
                 CommonFileDialogResult result = commonSaveFileDialog.ShowDialog();
 
                 if (result == CommonFileDialogResult.Ok)
@@ -294,6 +295,7 @@ namespace Bonk
         private void btnSaveAs_Click(object sender, RoutedEventArgs e)
         {
             CommonSaveFileDialog commonSaveFileDialog = new CommonSaveFileDialog();
+            commonSaveFileDialog.DefaultExtension = "json";
             CommonFileDialogResult result = commonSaveFileDialog.ShowDialog();
 
             if (result == CommonFileDialogResult.Ok)
